@@ -87,7 +87,6 @@ def Erobos_Chapter():
     lives_forgive = 0
 
 
-
 start_screen()
 characters = ["Fenrir Vortex", "Erebos Perilse"]
 selection = 1

@@ -1,3 +1,5 @@
+#Jared Guineo Lopez
+#Jose Arturo Reza Quezada
 import time
 import os
 import pygame
@@ -7,12 +9,13 @@ from tkinter import *
 from PIL import Image, ImageTk
 class Doloboros:
     def __init__(self):
+        #Funcion inicial, donde inicializamos todos los valores
         pygame.init()
-        self.flag = True    #Banndera para controlar algunos ciclos dentro del codigo
+        self.flag = True    #Bandera para controlar algunos ciclos dentro del codigo
         self.duracion = 2.5
         self.intervalo = 0.5
         self.repeticioes = int(self.duracion/self.intervalo)
-        self.speed = 0.01
+        self.speed = 0.05
         self.items_erebos = []
 
     def clear_screen(self): #Esta funcion ayuda a limpiar lo que este en consola
@@ -99,11 +102,11 @@ class Doloboros:
         |████████▀|||▀██████▀||█████▄▄██||▀██████▀||▄█████████▀|||▀██████▀||||███||||███||▀██████▀|||▄████████▀||
         |||||||||||||||||||||||▀||||||||||||||||||||||||||||||||||||||||||||||███||||███|||||||||||||||||||||||||
         +=======================================================================================================+
-        """ #ASCII hecho para el nombre del juego
+        """ #ASCII hecho para el nombre del juego, muy nice :)
         print(screen)
         self.intro_sound = pygame.mixer.Sound ("Silent_Hill.mp3")   #Libreria que ayuda a crear un objeto de Pygame y tomar un archivo de audio 
         self.intro_sound.play() #Reproduce archivo de audio
-        while self.flag:
+        while self.flag:    #Mientras este activa, hace un loop hasta que de inicio al juego e ingrese su nombre
             s = input("Bienvenido, ingresa 's' para iniciar: ").lower()
             if (s == 's'):
                 name = input("Ingresa tu nombre: ")
@@ -115,7 +118,8 @@ class Doloboros:
             else:
                 print("Opcion invalida, igresa s para iniciar")
         
-        self.flag = True    
+        self.flag = True   
+        #Ahora hace un ciclo para seleccionar al personaje 
         while self.flag:    
             print("Se abrira una ventana emergente con contexto sobre tu personaje")
             print("Presiona cualquier tecla")
@@ -135,7 +139,8 @@ class Doloboros:
             else:
                 print("Opcion invalida")
                 self.clear_screen()
-
+    
+    #Aqui definimos al pesonaje Moreau, donde inicializamos su salud mental, asesinatos, vidas perdonadas, etc.
     def Erebos_Moreau(self):
         self.mental_health = 0
         self.murders = 0
@@ -153,18 +158,20 @@ class Doloboros:
         embusteros que le enseñarian a subsistir\n""")
         self.print_paused(intro)
         self.clear_screen()
+        #Ahora empiezan los dialogos, puestos como impresiones pausadas y dando el lore de todo
         print("Instrucciones:\nPresiona cualquier letra para continuar en los dialogos.\n")
         self.key = keyboard.read_event(suppress = True).name
-        #audio de fondo
         self.text_blinking("1772")
         self.print_paused("Te encuentras en Francia viviendo entre comerciantes, no tienes un hogar, duermes en donde puedas y en donde se te permita.\n")
         self.print_paused("Comerciante: Erebos acompañame a ir por un cargamento\n")
+        #Aqui espera a que teclee algo para avanzar y seguir mandando texto
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Erebos niño: Claro!\n")
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Erebos niño: Estas robando? A tu propio proveedor?\n")
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Comerciante: Es lo que es y lo necesito mas que el, toma algo tu tambien\n")
+        #Ahora pregunta en la consola si quiere o no tomar
         while self.flag_b:
             self.ch = input("'t' tomar, 'n' no\n").lower()
             if self.ch == 't':
@@ -193,7 +200,7 @@ class Doloboros:
                 break
             else:
                 print("Ingresa una opcion valida")
-        
+        #Avanza la historia
         self.clear_screen()
         self.text_blinking("1781")
         self.print_paused("A los 19 años empiezas a relacionarte con personas que se ganan la vida de forma poco etica. En esta etapa no tienes mas opcion que ser cobrador\n") 
@@ -207,6 +214,7 @@ class Doloboros:
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Campesino: Por favor, es todo lo que tengo, tomelo\n")
         self.flag_b = True
+        #Ahora llega a otra parte, si quiere o no tomar le dinero y cambia el texto en cada parte
         while self.flag_b == True:
             self.ch = input("¿Aceptar 500 libras?\n 's ' \t 'n'\n").lower()
             if self.ch == 's':
@@ -271,6 +279,7 @@ class Doloboros:
         self.clear_screen()
         self.print_paused("Baron Ro: Toma esto\n")
         self.flag_b = True
+        #Otra bifurcacion donde pregunta si quiere o no tomar el arma, e imprime la salud mental en base a ello
         while self.flag_b:
             self.ch = input("Aceptar el arma\n's'\t'n'\n").lower()
             if self.ch == 's':
@@ -282,7 +291,7 @@ class Doloboros:
                 self.gun = True
                 self.flag_b = False
                 #self.inventory_erebos("Mental_Health_Bar_S1.png")
-            elif self.ch == 'n':
+            elif self.ch == 'n':    #Aqui no toma el arma y no afecta su salud mental
                 self.print_paused("Espero que no tengas que necesitarla pacifista\n")
                 self.key = keyboard.read_event(suppress = True).name
                 self.gun = False
@@ -310,6 +319,7 @@ class Doloboros:
         self.print_paused("Erebos: Ahi estas, podria generar una distraccion y apartarlo\n")
         self.key = keyboard.read_event(suppress = True).name
         self.flag_b = True
+        #Otra parte del camino, donde pregunta si se hace o no una distraccion y en base a ello suena un sonidito
         while self.flag_b:
             self.ch = input("Hacer\n'd' distraccion\n").lower()
             if self.ch == 'd':
@@ -327,6 +337,7 @@ class Doloboros:
                 self.print_paused("Charles: La cuestion es que el dinero ya no lo tengo\n")
                 self.key = keyboard.read_event(suppress = True).name
                 self.print_paused("Erebos: Bueno, parece que tendremos que solucionarlo de otra forma\n")
+                #Si tiene un arma, dispara, sino se mete en problemas y sucumbe a golpes
                 if self.gun == True:
                     self.print_paused("Charles: Si vas por ese camino, sera dificil dar vuelta atras \n")
                     self.sgun = pygame.mixer.Sound("Shot.mp3")
@@ -334,7 +345,7 @@ class Doloboros:
                     self.key = keyboard.read_event(suppress = True).name
                     self.print_paused("Has encontrado en su chaleco unos documentos\n")
                     self.murders += 1
-                    self.amu = self.bulllets - 1
+                    self.amu = self.bulllets - 1    #Bajamos las balas del arma
                     self.key = keyboard.read_event(suppress = True).name
                     self.flag_b == True
                 
@@ -359,6 +370,7 @@ class Doloboros:
                             self.key = keyboard.read_event(suppress = True).name
                             break
             while self.flag_b:
+                #Pregunta si quiere leer la carta, si si se muestra el texto de la carta, sino, se sale del bucle
                 self.print_paused("Leer carta\n")
                 self.ch = input("'s' 'n'").lower()
                 if self.ch == 's':
@@ -375,6 +387,7 @@ class Doloboros:
             self.print_paused("Baron Ro: ¿Que ha pasado chico\n")
             self.key = keyboard.read_event(suppress = True).name
             self.print_paused("Erebos: He encontrado estos documentos en el chaleco del señor Charles, creo que planeaba algo en contra suya.\n")
+            #imprimimos una carta en arte ascii
             letter = """
                         ...
                       /`   `\
@@ -391,7 +404,7 @@ class Doloboros:
             self.clear_screen()
             self.print_paused("A partir de ahora tendras una barra de salud mental, esta ira descendiendo o aumentando dependiendo de tus buenas o malas acciones\n")
             self.key = keyboard.read_event(suppress = True).name
-
+            #Aqui empezamos a tomar en cuenta y modificar la salud mental del personaje
                     
                 
             self.print_paused("Tiempo despues, en 1783 conoces a una mujer que se convertiria en tu esposa.\n")
@@ -431,6 +444,7 @@ class Doloboros:
             self.print_paused("Erebos: Claro Baron, descuide, en que le sirvo?\n")
             self.key = keyboard.read_event(suppress = True).name 
             self.flag_b = True
+            #Ahora vuelve a preguntar si quiere matar o no a una mujer, de todos modos la va a matar pero es para cambiar el modo de dialogo
             while self.flag_b:
                 self.print_paused("Baron Ro: Necesito de tus habilidaades nuevamente, tu objetivo sera una mujer, tienes problema con eso?\n")
                 self.ch = input("'S'    'N'\n").lower()
@@ -446,7 +460,7 @@ class Doloboros:
                     break
                 else:
                     print("Ingresa algo valido\n")
-            
+            #Continua la historia
             self.print_paused("Baron Ro: Tu siguiente objetivo sera Antonieta Monteur\n")
             self.key = keyboard.read_event(suppress = True).name 
             self.print_paused("Erebos: Algo de informacion que deba saber?\n")
@@ -472,7 +486,7 @@ class Doloboros:
             self.print_paused("Erebos: O tambien podria ser aquel...\nMaldicion\n")
             self.print_paused("Erebos: No tendre tiempo de evenarlos todos\n")
             self.key = keyboard.read_event(suppress = True).name 
-            
+            #Ahora busca interactur para poder envenenar a las personas
             self.flag_b = True
             while self.flag_b:
                 self.print_paused("Envenar los primeros 3\n")
@@ -485,7 +499,7 @@ class Doloboros:
                     self.flag_b = False
                 else:
                     print("Invalido")   
-            
+            #Sigue la historia
             self.print_paused(" Pasteles envenenados\n")
             self.key = keyboard.read_event(suppress = True).name 
             self.print_paused("Pastelero: Hola, puedo ayudarle en algo?\n")
@@ -500,7 +514,7 @@ class Doloboros:
             self.key = keyboard.read_event(suppress = True).name 
             self.print_paused("Erebos: Ya veo, se ven deliciosos, muchas gracias, hasta pronto\n")
             self.key = keyboard.read_event(suppress = True).name 
-            
+            #Cambiamos de escenario
             self.clear_screen()
             self.print_paused("Despacho del Baron Ro:\n")
             self.print_paused("Baron Ro: Sabia que serias rapido, pero no tanto, tiene menos de 3 horas que nos vimos\n")
@@ -538,6 +552,7 @@ class Doloboros:
             self.key = keyboard.read_event(suppress = True).name 
             self.nono = pygame.mixer.Sound ("Nonono.mp3")   #Libreria que ayuda a crear un objeto de Pygame y tomar un archivo de audio 
             self.nono.play() #Reproduce archivo de audio
+             #Otro ascii art, mostrando un pastel
             cake = """
              _______________________________      __________________________
             /                               \    /                          \   
@@ -617,6 +632,7 @@ class Doloboros:
         self.print_paused("Elige 1 item para llevar contigo\n")
         print("1.Cuchillo\2.Veneno\n3. Ir sin items")
         self.flag_b = True
+        #Pide escoger entre las opciones para escoger el item, y actua en base a ellas
         while self.flag_b:
             self.ch = int(input("Ingresa un numero"))
             if self.ch == 1:
@@ -639,13 +655,14 @@ class Doloboros:
                 print("Debe ser un item valido\n")
         
         
-        
+    
         #Primer asesinato
         self.clear_screen()
         self.text_blinking("Febrero. 1789\n")
         self.print_paused("Informacion: Tu primera victima sera Jean Dubois")
         self.decision = input("'a' asesinar a Jean Dubois, 'p' perdonar").lower()
         self.flag_b = True
+        #Decide el personaje entre matar o perdonar a su primer victima
         while self.flag_b:    
             if self.decision == 'a':
                 self.print_paused("Erebos: Adiós, Jean Dubois\n")
@@ -671,6 +688,7 @@ class Doloboros:
         self.print_paused("Informacion: Tu siguiente objetivo sera Isabelle Dupont")
         self.decision = input("'a' asesinar a Isabelle Dupont, 'p' perdonar").lower()
         self.flag_b = True
+        #Ahora decide si mata o no a la mujer, preservando o no su salud mental
         while self.flag_b:    
             if self.decision == 'a':
                 self.print_paused("Erebos: Adiós, Isabelle Dupont\n")
@@ -694,6 +712,7 @@ class Doloboros:
         self.print_paused("Informacion: Tu siguiente victima sera Claire Martin")
         self.decision = input("'a' asesinar a Claire Martin, 'p' perdonar").lower()
         self.flag_b = True
+        #Lo mismo con su tercer victima, donde pregunta si quiere o no matarlo
         while self.flag_b:    
             if self.decision == 'a':
                 self.print_paused("Erebos: Adiós, Claire Martin\n")
@@ -718,6 +737,7 @@ class Doloboros:
         self.print_paused("Informacion: Tu siguiente victima sera Francois Leclerc")
         self.decision = input("'a' asesinar a Francois Leclerc, 'p' perdonar").lower()
         self.flag_b = True
+        #En este punto, su salud mental esta muy deteriorada si es que ha ido matando a sus victimas
         while self.flag_b:    
             if self.decision == 'a':
                 self.print_paused("Erebos: Adiós, Francois Leclerc\n")
@@ -742,6 +762,7 @@ class Doloboros:
         self.print_paused("Informacion: Tu siguiente victima sera Samir Eiffel")
         self.decision = input("'a' asesinar a Samir Eiffel, 'p' perdonar").lower()
         self.flag_b = True
+        #Ahora con la quinta victima, el buen Samir, pregunta si quiere o no matarlo para darle desarrollo de personaje y sufrir las consecuencias
         while self.flag_b:    
             if self.decision == 'a':
                 self.print_paused("Erebos: Adiós, Samir Eiffel\n")
@@ -758,9 +779,10 @@ class Doloboros:
             else:
                 self.print_paused("Decisión no válida...\n")  
         
-        #Sexta victima
+        #Sexta victima, aqui hay mas interaccion porque es una muerte especial
         self.clear_screen()
-        self.text_blinking("Julio. 1789\n")
+        self.text_blinking("Julio. 1789\n") #Año y mes en donde inicio La Revolucion Francesa
+        #Va dando la informacion conforme se tecleen las partes
         self.print_paused("Informacion: Tu siguiente victima sera Adler ----")
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Lo puedes encontrar en un bar llamado artisant")
@@ -783,6 +805,7 @@ class Doloboros:
         self.key = keyboard.read_event(suppress = True).name
         self.print_paused("Erebos:(No tengo tiempo que perder con este payaso, deberia encargarme aqui y ahora o esperar?)")
         self.ch = input("'p' pelear, 'c' charlar").lower
+        #Aqui se decide si quiere pelear o no con el personaje
         if self.ch == 'p':
             self.print_paused("Erebos: Te acabas de meter en los mios amigo\n")
             self.key = keyboard.read_event(suppress = True).name
@@ -791,7 +814,8 @@ class Doloboros:
             while punch:
                         self.ch = input("'g' golpear\n").lower()
                         if self.ch == 'g':
-                            self.ou = pygame.mixer.Sound("Punch.mp3")
+                            #Lo deja golpearlo 10 veces
+                            self.ou = pygame.mixer.Sound("Punch.mp3")   #Suenan sonidos de golpes
                             self.ou.play()    
                             self.hits += 1
                         if self.hits == 10:
@@ -816,6 +840,7 @@ class Doloboros:
                             self.kill_a = True
                             break
         elif self.ch == 'c':
+            #La historia cambia si es que lo perdona, y le da mas texto
             self.key = keyboard.read_event(suppress = True).name
             self.print_paused("Erebos: No hay necesidad de ser agresivos, solo queria charlar\n")
             self.key = keyboard.read_event(suppress = True).name
@@ -867,8 +892,9 @@ class Doloboros:
             self.lives_forgive += 1
         else:
             print("Ingresa una opcion valida\n")
-            
+        #Si perdono mas vidas que las que quito,    
         if self.lives_forgive > self.murders:
+            #Si mato a Adler, muere su hija y esposa
             if self.kill_a == True:
                 self.print_paused("Erebos: ALTO BARON ROHAN!!\n")
                 self.key = keyboard.read_event(suppress = True).name
@@ -882,6 +908,7 @@ class Doloboros:
                 self.key = keyboard.read_event(suppress = True).name
                 self.print_paused("Erobos: Me han quitado lo que mas amo, todo me lo arrebataron, yo hare lo mismo con el\n")
                 self.key = keyboard.read_event(suppress = True).name
+                #Una guillotina en arte ascii
                 guillotina = """
                       __.--.____________.--.__
       (       _.------._       ).
@@ -928,6 +955,7 @@ class Doloboros:
                 self.clear_screen()
                 self.text_blinking("Desarrollado por: Arturo Reza y Jared Lopez")
             else:
+                #Si no mato a Adler, aun alcanza a salvar a su hija y esposa
                 self.print_paused("Hospital\n")
                 self.key = keyboard.read_event(suppress = True).name
                 self.print_paused("Baron Ro: Muy tarde, si yo caigo con todos estos revolucionarios y nobles tontos caeran conmigo\n")
@@ -951,6 +979,7 @@ class Doloboros:
                 self.text_blinking("Desarrollado por: Arturo Reza y Jared Lopez")                
             
         else:
+             #El final feo, en caso de que no haya perdonado suficientes vidas
             self.print_paused("No has conseguido llegar a tiempo, debido al elevado numero de muertes que has hecho, y al degradado estado de salud mental que tienes\n")
             self.print_paused("Has desbloqueado el peor final posible\n")
             self.key = keyboard.read_event(suppress = True).name
@@ -963,11 +992,15 @@ class Doloboros:
             self.key = keyboard.read_event(suppress = True).name
             self.sgun = pygame.mixer.Sound("Shot.mp3")
             self.sgun.play()
+            self.sf1 = pygame.mixer.Sound("Loki.mp3")
+            self.sf1.play()
             self.print_paused("Han llevado a tu hija y a tu esposa a la guillotina, tu salud mental esta en el nivel mas bajo.")
+            print(guillotina)
             self.text_blinking("Gracias por jugar, intenta nuevamente para llegar a otro final :)")
             self.clear_screen()
             time.sleep(5)
             self.text_blinking("Desarrollado por: Arturo Reza y Jared Lopez")
-            
+
+#Con esto inicializamos el juego, mucha suerte :)
 New_Game = Doloboros()
 New_Game.start_screen()
